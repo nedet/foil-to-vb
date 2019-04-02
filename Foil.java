@@ -94,7 +94,7 @@ public class Foil extends java.applet.Applet {
    Graphics off3Gg
 
    private sub init()
-     int i
+     dim i as integer
      solve = new Solver()
 
      offImg1 = createImage(this.size().width,
@@ -123,44 +123,44 @@ public class Foil extends java.applet.Applet {
      out.plt.start()
   end sub
 
-  public Insets insets() {
+  private sub insets()
      return new Insets(10,10,10,10)
   }
 
-  public void computeFlow() {
+  private sub computeFlow()
 
-     if (flflag == 1) {
+     if (flflag == 1) then
          solve.getFreeStream ()
          solve.getCirc ()                   ' get circulation
          solve.genFlow ()
-     }
+     end if
 
-     if (foil <= 3)
-         {
+     if (foil <= 3) then
+
          reynolds = vfsd/vconv * chord/lconv * rho / viscos
-         }
+
      else
-         {
+
          reynolds = vfsd/vconv * 2 * radius/lconv * rho / viscos
-         }
+      end if
 
        thkd = thkinpt
      camd = caminpt
      alfd = alfval
 
      out.plt.loadPlot()
-  }
+  end sub
 
-  public int filter0(double inumbr) {
+  private sub filter0(double inumbr)
         //  output only to .
-       int number
-       int intermed
+       dim number as integer
+       dim intermed as integer
 
        number = (int) (inumbr)
        return number
-  }
+  end sub
 
-  public float filter1(double inumbr) {
+  private sub filter1(double inumbr)
      //  output only to .1
        float number
        int intermed
@@ -168,20 +168,20 @@ public class Foil extends java.applet.Applet {
        intermed = (int) (inumbr * 10.)
        number = (float) (intermed / 10. )
        return number
-  }
+  end sub
 
-  public float filter3(double inumbr) {
+  private sub filter3(double inumbr)
      //  output only to .001
        float number
-       int intermed
+       dim intermed as integer
 
        intermed = (int) (inumbr * 1000.)
        number = (float) (intermed / 1000. )
        return number
-  }
+  end sub
 
 
-  public void setUnits() {   // Switching Units
+  private sub setUnits()    // Switching Units
        double ovs,chords,spans,aros,chos,spos,rads
        double alts,ares
 
@@ -216,21 +216,21 @@ public class Foil extends java.applet.Applet {
        radius  = rads * lconv
 
        return
-  }
+  end sub
 
-  public void loadInput() {   // load the input panels
+  private sub loadInput()    // load the input panels
 
        computeFlow()
        return
-  }
+  end sub
 
 
-  class Solver {
+  class Solver {    '????????????
 
      Solver () {
      }
 
-     public void setDefaults() {
+     private sub setDefaults()
 
         dragOut = 0
         arcor = 1
@@ -319,9 +319,9 @@ public class Foil extends java.applet.Applet {
         radmn = .05   radmx = 5.0
 
         return
-     }
+     end sub
 
-     public void getFreeStream() {    //  free stream conditions
+     private sub getFreeStream()     //  free stream conditions
        double hite,pvap,rgas,gama,mu0        ' MODS  19 Jan 00  whole routine
 
        g0 = 32.2
@@ -340,9 +340,9 @@ public class Foil extends java.applet.Applet {
        pt0 = ps0 + q0
 
        return
-     }
+     end sub
 
-     public void getCirc() {   // circulation from Kutta condition
+     private sub getCirc()    // circulation from Kutta condition
        double thet,rdm,thtm
        double beta
        int index
@@ -383,9 +383,9 @@ public class Foil extends java.applet.Applet {
        yt2 = yt + spanfac
 
        return
-     }
+     end sub
 
-     public void genFlow() {   // generate flowfield
+     private sub genFlow()    // generate flowfield
        double rnew,thet,psv,fxg
        int k,index
                               ' all lines of flow  except stagnation line
@@ -452,9 +452,9 @@ public class Foil extends java.applet.Applet {
        clift = gamval*4.0*3.1415926/chrd
 
        return
-     }
+     end sub
 
-     public void getPoints(double fxg, double psv) {   // flow in x-psi
+     private sub getPoints(double fxg, double psv)    // flow in x-psi
        double radm,thetm
        double fnew,ynew,yold,rfac,deriv
        double xold,xnew,thet
@@ -509,9 +509,9 @@ public class Foil extends java.applet.Applet {
        lygt = lrgt * Math.sin((lthgt - alfval)*convdr)
 
        return
-     }
+     end sub
 
-     public void getVel(double rad, double theta) {  //velocity and pressure
+     private sub getVel(double rad, double theta)   //velocity and pressure
       double ur,uth,jake1,jake2,jakesq
       double xloc,yloc,thrad,alfrad
 
@@ -544,7 +544,7 @@ public class Foil extends java.applet.Applet {
            pres = 1.0 - vsq
 
           return
-    }
+    end sub
 
 
 
@@ -586,14 +586,14 @@ public class Foil extends java.applet.Applet {
            run2 = null
         }
 
-        public void start() {
-           if (run2 == null) {
+        private sub start()
+           if (run2 == null) then
               run2 = new Thread(this)
               run2.start()
-           }
-        }
+           end if
+        end sub
 
-        public void run() {
+        private sub run()
           int timer
 
           timer = 100
@@ -602,9 +602,9 @@ public class Foil extends java.applet.Applet {
              catch (InterruptedException e) {}
              out.plt.repaint()
           }
-        }
+        end sub
 
-        public void loadPlot() {
+        private sub loadPlot()
           double rad,ang,xc,yc,lftref,clref,drgref,cdref
           double del,spd,awng,ppl,tpl,hpl,angl,thkpl,campl,clpl,cdpl
           int index,ic
@@ -628,7 +628,7 @@ public class Foil extends java.applet.Applet {
              }
           }
 
-         }
+         end sub
 
         public double getClplot (double camb, double thic, double angl) {
            double beta,xc,yc,rc,gamc,lec,tec,lecm,tecm,crdc
@@ -650,27 +650,27 @@ public class Foil extends java.applet.Applet {
 
            number = stfact*gamc*4.0*3.1415926/crdc
 
-           if (arcor == 1) {  // correction for low aspect ratio
+           if (arcor == 1) then  // correction for low aspect ratio
                number = number /(1.0 + number/(3.14159*aspr))
-           }
+           end if
 
            return (number)
         }
 
-        public void update(Graphics g) {
+        private sub update(Graphics g)
            out.plt.paint(g)
-        }
+        end sub
 
-        public void paint(Graphics g) {
-           int i,j,k,n,index
-           int xlabel,ylabel,ind,inmax,inmin
-           int exes[] = new int[8]
-           int whys[] = new int[8]
+        private sub paint(Graphics g)
+           dim i,j,k,n,index as integer
+           dim xlabel,ylabel,ind,inmax,inmin as integer
+           dim  exes(8)  as integer
+           dim whys(8) as integer
            double offx,scalex,offy,scaley,waste,incy,incx
            double xl,yl
            double liftab,dragab
-           int camx[] = new int[19]
-           int camy[] = new int[19]
+           dim camx(19) as integer
+           dim camy(19) as integer
            Color col
 
            if (ntikx < 2) ntikx = 2      ' protection 13June96
@@ -684,7 +684,7 @@ public class Foil extends java.applet.Applet {
 
 
                 g.drawImage(offImg2,0,0,this)
-       }
+       end sub
      }     // Plt
 
       } // Out
@@ -709,16 +709,16 @@ public class Foil extends java.applet.Applet {
         return true
      }
 
-     public void start() {
+     private sub start()
         if (runner == null) {
            runner = new Thread(this)
            runner.start()
         }
         antim = 0
         ancol = 1
-     }
+     end sub
 
-     public void run() {
+     private sub run()
        int timer
 
        timer = 100
@@ -733,21 +733,21 @@ public class Foil extends java.applet.Applet {
           }
           timer = 135 - (int) (.227 *vfsd/vconv)
         }
-     }
+     end sub
 
-     public void update(Graphics g) {
+     private sub update(Graphics g)
         view.paint(g)
-     }
+     end sub
 
-     public void paint(Graphics g) {
-        int i,j,k,n
-        int xlabel,ylabel,ind,inmax,inmin
-        int exes[] = new int[8]
-        int whys[] = new int[8]
+     private sub paint(Graphics g)
+        dim i,j,k,n as integer
+        dim xlabel,ylabel,ind,inmax,inmin as integer
+        dim exes(8) as integer
+        dim whys(8) as integer
         double offx,scalex,offy,scaley,waste,incy,incx
         double xl,yl,slope,radvec,xvec,yvec
-        int camx[] = new int[19]
-        int camy[] = new int[19]
+        dim camx(19) as integer
+        dim camy(19) as integer
         Color col
 
         col = new Color(0,0,0)
@@ -759,8 +759,8 @@ public class Foil extends java.applet.Applet {
      lots deleted
 
 
-        if (viewflg == 0 || viewflg == 2) {  // edge View
-         if (vfsd > .01) {
+        if (viewflg == 0 || viewflg == 2) then   // edge View
+         if (vfsd > .01) then
                                             ' plot airfoil flowfield
           radvec = .5
           for (j=1 j<=nln2-1 ++j) {           ' lower half (AIRFLOW)
@@ -773,14 +773,14 @@ public class Foil extends java.applet.Applet {
                 exes[1] = (int) (fact*xvec) + xt
                 whys[1] = (int) (fact*(-yvec)) + yt
 
-                if (displ == 2 && (i/3*3 == i) ) {
+                if (displ == 2 && (i/3*3 == i) ) then
                   off1Gg.setColor(col)
                   for (n=1  n <= 4  ++n) {
                      if(i == 6 + (n-1)*9) off1Gg.setColor(Color.yellow)
                   }
                   if(i/9*9 == i) off1Gg.setColor(Color.white)
                   off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
-                }
+                end if
                 if (displ == 1 && ((i-antim)/3*3 == (i-antim)) ) {
                   if (ancol == -1) {          ' MODS  27 JUL 99
                     if((i-antim)/6*6 == (i-antim))off1Gg.setColor(col)
@@ -856,7 +856,7 @@ public class Foil extends java.applet.Applet {
                 }
              }
           }
-        }
+        end if
 
          if (viewflg == 0) {
   // draw the airfoil geometry
@@ -880,11 +880,11 @@ public class Foil extends java.applet.Applet {
                 off1Gg.fillPolygon(exes,whys,4)    // THIS DRAWS AIRFOIL
                 }
              }
-          }
+          end if
 
         g.drawImage(offImg1,0,0,this)      // draws airflow!!!!
 
-     } // end paint
+     end sub // end paint
 
   } // end Viewer
 
