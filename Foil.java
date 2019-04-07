@@ -152,7 +152,7 @@ public class Foil extends java.applet.Applet {
   end sub
 
   private sub filter0(double inumbr)
-        //  output only to .
+        '  output only to .
        dim number as integer
        dim intermed as integer
 
@@ -161,7 +161,7 @@ public class Foil extends java.applet.Applet {
   end sub
 
   private sub filter1(double inumbr)
-     //  output only to .1
+     '  output only to .1
        float number
        int intermed
 
@@ -171,7 +171,7 @@ public class Foil extends java.applet.Applet {
   end sub
 
   private sub filter3(double inumbr)
-     //  output only to .001
+     '  output only to .001
        float number
        dim intermed as integer
 
@@ -181,9 +181,9 @@ public class Foil extends java.applet.Applet {
   end sub
 
 
-  private sub setUnits()    // Switching Units
-       double ovs,chords,spans,aros,chos,spos,rads
-       double alts,ares
+  private sub setUnits()    ' Switching Units
+       dim ovs,chords,spans,aros,chos,spos,rads as double
+       dim alts,ares as double
 
        alts = alt / lconv
        chords = chord / lconv
@@ -218,7 +218,7 @@ public class Foil extends java.applet.Applet {
        return
   end sub
 
-  private sub loadInput()    // load the input panels
+  private sub loadInput()    ' load the input panels
 
        computeFlow()
        return
@@ -236,7 +236,7 @@ public class Foil extends java.applet.Applet {
         arcor = 1
         indrag = 1
         recor = 1
-        bdragflag = 1  // smooth ball
+        bdragflag = 1  ' smooth ball
         planet = 0
         lunits = 0
         lftout = 0
@@ -303,7 +303,7 @@ public class Foil extends java.applet.Applet {
         yt1 = yt - spanfac
         xt2 = xt - spanfac
         yt2 = yt + spanfac
-        plthg[1] = 0.0
+        plthg(1) = 0.0
 
         probflag = 0
         anflag = 1
@@ -321,8 +321,8 @@ public class Foil extends java.applet.Applet {
         return
      end sub
 
-     private sub getFreeStream()     //  free stream conditions
-       double hite,pvap,rgas,gama,mu0        ' MODS  19 Jan 00  whole routine
+     private sub getFreeStream()     '  free stream conditions
+       dim hite,pvap,rgas,gama,mu0 as double        ' MODS  19 Jan 00  whole routine
 
        g0 = 32.2
        rgas = 1718.                 ' ft2/sec2 R
@@ -342,7 +342,7 @@ public class Foil extends java.applet.Applet {
        return
      end sub
 
-     private sub getCirc()    // circulation from Kutta condition
+     private sub getCirc()    ' circulation from Kutta condition
        double thet,rdm,thtm
        double beta
        int index
@@ -355,26 +355,26 @@ public class Foil extends java.applet.Applet {
               beta = Math.asin(ycval/rval)/convdr      ' Kutta condition
               gamval = 2.0*rval*Math.sin((alfval+beta)*convdr)
 
-                             // geometry
+                             ' geometry
        for (index =1 index <= nptc ++index) {
            thet = (index -1)*360./(nptc-1)
-           xg[0][index] = rval * Math.cos(convdr * thet) + xcval
-           yg[0][index] = rval * Math.sin(convdr * thet) + ycval
-           rg[0][index] = Math.sqrt(xg[0][index]*xg[0][index] +
-                                yg[0][index]*yg[0][index])
-           thg[0][index] = Math.atan2(yg[0][index],xg[0][index])/convdr
-           xm[0][index] = (rg[0][index] + 1.0/rg[0][index])*
-                    Math.cos(convdr*thg[0][index])
-           ym[0][index] = (rg[0][index] - 1.0/rg[0][index])*
-                    Math.sin(convdr*thg[0][index])
-           rdm = Math.sqrt(xm[0][index]*xm[0][index] +
-                           ym[0][index]*ym[0][index])
-           thtm = Math.atan2(ym[0][index],xm[0][index])/convdr
-           xm[0][index] = rdm * Math.cos((thtm - alfval)*convdr)
-           ym[0][index] = rdm * Math.sin((thtm - alfval)*convdr)
+           xg(0,index) = rval * Math.cos(convdr * thet) + xcval
+           yg(0,index) = rval * Math.sin(convdr * thet) + ycval
+           rg(0,index) = Math.sqrt(xg(0,index)*xg(0,index) +
+                                yg(0,index)*yg(0,index))
+           thg(0,index) = Math.atan2(yg(0,index),xg(0,index))/convdr
+           xm(0,index) = (rg(0,index) + 1.0/rg(0,index))*
+                    Math.cos(convdr*thg(0,index))
+           ym(0,index) = (rg(0,index) - 1.0/rg(0,index))*
+                    Math.sin(convdr*thg(0,index))
+           rdm = Math.sqrt(xm(0,index)*xm(0,index) +
+                           ym(0,index)*ym(0,index))
+           thtm = Math.atan2(ym(0,index),xm(0,index))/convdr
+           xm(0,index) = rdm * Math.cos((thtm - alfval)*convdr)
+           ym(0,index) = rdm * Math.sin((thtm - alfval)*convdr)
            getVel(rval,thet)
-           plp[index] = ((ps0 + pres * q0)/2116.) * pconv
-           plv[index] = vel * vfsd
+           plp(index) = ((ps0 + pres * q0)/2116.) * pconv
+           plv(index) = vel * vfsd
        }
 
        xt1 = xt + spanfac
@@ -385,7 +385,7 @@ public class Foil extends java.applet.Applet {
        return
      end sub
 
-     private sub genFlow()    // generate flowfield
+     private sub genFlow()    ' generate flowfield
        double rnew,thet,psv,fxg
        int k,index
                               ' all lines of flow  except stagnation line
@@ -394,12 +394,12 @@ public class Foil extends java.applet.Applet {
          fxg = xflow
          for (index =1 index <=nptc ++ index) {
            solve.getPoints (fxg,psv)
-           xg[k][index]  = lxgt
-           yg[k][index]  = lygt
-           rg[k][index]  = lrgt
-           thg[k][index] = lthgt
-           xm[k][index]  = lxmt
-           ym[k][index]  = lymt
+           xg(k,index)  = lxgt
+           yg(k,index)  = lygt
+           rg(k,index)  = lrgt
+           thg(k,index) = lthgt
+           xm(k,index)  = lxmt
+           ym(k,index)  = lymt
 
            solve.getVel(lrg,lthg)
            fxg = fxg + vxdir*deltb
@@ -415,12 +415,12 @@ public class Foil extends java.applet.Applet {
                                    (rnew - rval*rval/rnew))
            fxg =  - rnew * Math.cos(thet)
            solve.getPoints (fxg,psv)
-           xg[k][index]  = lxgt
-           yg[k][index]  = lygt
-           rg[k][index]  = lrgt
-           thg[k][index] = lthgt
-           xm[k][index]  = lxmt
-           ym[k][index]  = lymt
+           xg(k,index)  = lxgt
+           yg(k,index)  = lygt
+           rg(k,index)  = lrgt
+           thg(k,index) = lthgt
+           xm(k,index)  = lxmt
+           ym(k,index)  = lymt
        }
                                               '  downstream flow
        for (index = 1 index <= npt2 ++ index) {
@@ -429,20 +429,20 @@ public class Foil extends java.applet.Applet {
                                       (rnew - rval*rval/rnew))
            fxg =   rnew * Math.cos(thet)
            solve.getPoints (fxg,psv)
-           xg[k][npt2+index]  = lxgt
-           yg[k][npt2+index]  = lygt
-           rg[k][npt2+index]  = lrgt
-           thg[k][npt2+index] = lthgt
-           xm[k][npt2+index]  = lxmt
-           ym[k][npt2+index]  = lymt
+           xg(k,npt2+index)  = lxgt
+           yg(k,npt2+index)  = lygt
+           rg(k,npt2+index)  = lrgt
+           thg(k,npt2+index) = lthgt
+           xm(k,npt2+index)  = lxmt
+           ym(k,npt2+index)  = lymt
        }
                                               '  stagnation point
-       xg[k][npt2]  = xcval
-       yg[k][npt2]  = ycval
-       rg[k][npt2]  = Math.sqrt(xcval*xcval+ycval*ycval)
-       thg[k][npt2] = Math.atan2(ycval,xcval)/convdr
-       xm[k][npt2]  = (xm[k][npt2+1] + xm[k][npt2-1])/2.0
-       ym[k][npt2]  = (ym[0][nptc/4+1] + ym[0][nptc/4*3+1])/2.0
+       xg(k,npt2)  = xcval
+       yg(k,npt2)  = ycval
+       rg(k,npt2)  = Math.sqrt(xcval*xcval+ycval*ycval)
+       thg(k,npt2) = Math.atan2(ycval,xcval)/convdr
+       xm(k,npt2)  = (xm(k,npt2+1) + xm(k,npt2-1))/2.0
+       ym(k,npt2)  = (ym(0,nptc/4+1) + ym(0,nptc/4*3+1))/2.0
                                 '  compute lift coefficient
        leg = xcval - Math.sqrt(rval*rval - ycval*ycval)
        teg = xcval + Math.sqrt(rval*rval - ycval*ycval)
@@ -454,7 +454,7 @@ public class Foil extends java.applet.Applet {
        return
      end sub
 
-     private sub getPoints(double fxg, double psv)    // flow in x-psi
+     private sub getPoints(double fxg, double psv)    ' flow in x-psi
        double radm,thetm
        double fnew,ynew,yold,rfac,deriv
        double xold,xnew,thet
@@ -511,7 +511,7 @@ public class Foil extends java.applet.Applet {
        return
      end sub
 
-     private sub getVel(double rad, double theta)   //velocity and pressure
+     private sub getVel(double rad, double theta)   'velocity and pressure
       double ur,uth,jake1,jake2,jakesq
       double xloc,yloc,thrad,alfrad
 
@@ -548,7 +548,7 @@ public class Foil extends java.applet.Applet {
 
 
 
-  } // end Solver class
+  } ' end Solver class
 
   class Con extends Panel {
      Foil outerparent
@@ -558,7 +558,7 @@ public class Foil extends java.applet.Applet {
      }
 
 
-  } // Con
+  } ' Con
 
 
   class Out extends Panel {
@@ -619,11 +619,11 @@ public class Foil extends java.applet.Applet {
           cdref = dragco
           drgref = cdref * q0 * area/lconv/lconv
 
-// load up the view image
+' load up the view image
           for (ic = 0 ic <= nlnc ++ ic) {
              for (index = 0 index <= nptc ++ index) {
-                   xpl[ic][index] = xm[ic][index]
-                   ypl[ic][index] = ym[ic][index]
+                   xpl(ic,index) = xm(ic,index)
+                   ypl(ic,index) = ym(ic,index)
 
              }
           }
@@ -645,12 +645,12 @@ public class Foil extends java.applet.Applet {
            lecm = lec + 1.0/lec
            tecm = tec + 1.0/tec
            crdc = tecm - lecm
-                                      // stall model 1
+                                      ' stall model 1
            stfact = 1.0
 
            number = stfact*gamc*4.0*3.1415926/crdc
 
-           if (arcor == 1) then  // correction for low aspect ratio
+           if (arcor == 1) then  ' correction for low aspect ratio
                number = number /(1.0 + number/(3.14159*aspr))
            end if
 
@@ -685,9 +685,9 @@ public class Foil extends java.applet.Applet {
 
                 g.drawImage(offImg2,0,0,this)
        end sub
-     }     // Plt
+     }     ' Plt
 
-      } // Out
+      } ' Out
 
   class Viewer extends Canvas
          implements Runnable{
@@ -744,8 +744,8 @@ public class Foil extends java.applet.Applet {
         dim xlabel,ylabel,ind,inmax,inmin as integer
         dim exes(8) as integer
         dim whys(8) as integer
-        double offx,scalex,offy,scaley,waste,incy,incx
-        double xl,yl,slope,radvec,xvec,yvec
+        dim offx,scalex,offy,scaley,waste,incy,incx as double
+        dim xl,yl,slope,radvec,xvec,yvec as double
         dim camx(19) as integer
         dim camy(19) as integer
         Color col
@@ -755,23 +755,23 @@ public class Foil extends java.applet.Applet {
         off1Gg.setColor(Color.black)
         off1Gg.fillRect(0,0,500,500)
 
-     '   do NOT need viewflg 1 cases             // Top View
-     lots deleted
+     '   do NOT need viewflg 1 cases             ' Top View
+     'lots deleted
 
 
-        if (viewflg == 0 || viewflg == 2) then   // edge View
+        if (viewflg == 0 || viewflg == 2) then   ' edge View
          if (vfsd > .01) then
                                             ' plot airfoil flowfield
           radvec = .5
           for (j=1 j<=nln2-1 ++j) {           ' lower half (AIRFLOW)
              for (i=1  i<= nptc-1 ++i) {
-                exes[0] = (int) (fact*xpl[j][i]) + xt
-                whys[0] = (int) (fact*(-ypl[j][i])) + yt
-                slope = (ypl[j][i+1]-ypl[j][i])/(xpl[j][i+1]-xpl[j][i])
-                xvec = xpl[j][i] + radvec / Math.sqrt(1.0 + slope*slope)
-                yvec = ypl[j][i] + slope * (xvec - xpl[j][i])
-                exes[1] = (int) (fact*xvec) + xt
-                whys[1] = (int) (fact*(-yvec)) + yt
+                exes(0) = (int) (fact*xpl(j)(i)) + xt
+                whys(0) = (int) (fact*(-ypl(j)(i))) + yt
+                slope = (ypl(j)(i+1)-ypl(j)(i))/(xpl(j)(i+1)-xpl(j)(i))
+                xvec = xpl(j)(i) + radvec / Math.sqrt(1.0 + slope*slope)
+                yvec = ypl(j)(i) + slope * (xvec - xpl(j)(i))
+                exes(1) = (int) (fact*xvec) + xt
+                whys(1) = (int) (fact*(-yvec)) + yt
 
                 if (displ == 2 && (i/3*3 == i) ) then
                   off1Gg.setColor(col)
@@ -779,7 +779,7 @@ public class Foil extends java.applet.Applet {
                      if(i == 6 + (n-1)*9) off1Gg.setColor(Color.yellow)
                   }
                   if(i/9*9 == i) off1Gg.setColor(Color.white)
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
                 end if
                 if (displ == 1 && ((i-antim)/3*3 == (i-antim)) ) {
                   if (ancol == -1) {          ' MODS  27 JUL 99
@@ -790,50 +790,50 @@ public class Foil extends java.applet.Applet {
                     if((i-antim)/6*6 == (i-antim))off1Gg.setColor(Color.white)
                     if((i-antim)/6*6 != (i-antim))off1Gg.setColor(col)
                   }
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
                 }
              }
           }
 
           off1Gg.setColor(Color.white)  ' stagnation
-          exes[1] = (int) (fact*xpl[nln2][1]) + xt
-          whys[1] = (int) (fact*(-ypl[nln2][1])) + yt
+          exes(1) = (int) (fact*xpl(nln2)(1)) + xt
+          whys(1) = (int) (fact*(-ypl(nln2)(1))) + yt
           for (i=2  i<= npt2-1 ++i) {
-                exes[0] = exes[1]
-                whys[0] = whys[1]
-                exes[1] = (int) (fact*xpl[nln2][i]) + xt
-                whys[1] = (int) (fact*(-ypl[nln2][i])) + yt
+                exes(0) = exes(1)
+                whys(0) = whys(1)
+                exes(1) = (int) (fact*xpl(nln2)(i)) + xt
+                whys(1) = (int) (fact*(-ypl(nln2)(i))) + yt
                 if (displ <= 2) {             ' MODS  21 JUL 99
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
                 }
           }
-          exes[1] = (int) (fact*xpl[nln2][npt2+1]) + xt
-          whys[1] = (int) (fact*(-ypl[nln2][npt2+1])) + yt
-          for (i=npt2+2  i<= nptc ++i) {
-                exes[0] = exes[1]
-                whys[0] = whys[1]
-                exes[1] = (int) (fact*xpl[nln2][i]) + xt
-                whys[1] = (int) (fact*(-ypl[nln2][i])) + yt
-                if (displ <= 2) {                         ' MODS  21 JUL 99
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
-                }
-          }
+          exes(1) = (int) (fact*xpl(nln2)(npt2+1)) + xt
+          whys(1) = (int) (fact*(-ypl(nln2)(npt2+1))) + yt
+          for (i=npt2+2 to nptc) 
+                exes(0) = exes(1)
+                whys(0) = whys(1)
+                exes(1) = (int) (fact*xpl(nln2)(i)) + xt
+                whys(1) = (int) (fact*(-ypl(nln2)(i))) + yt
+                if (displ <= 2) then                         ' MODS  21 JUL 99
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
+                end if
+          next i
 
 
-            for (j=nln2+1 j<=nlnc ++j) {          ' upper half (AIRFLOW)
-             for (i=1  i<= nptc-1 ++i) {
-                exes[0] = (int) (fact*xpl[j][i]) + xt
-                whys[0] = (int) (fact*(-ypl[j][i])) + yt
-                slope = (ypl[j][i+1]-ypl[j][i])/(xpl[j][i+1]-xpl[j][i])
-                xvec = xpl[j][i] + radvec / Math.sqrt(1.0 + slope*slope)
-                yvec = ypl[j][i] + slope * (xvec - xpl[j][i])
-                exes[1] = (int) (fact*xvec) + xt
-                whys[1] = (int) (fact*(-yvec)) + yt
+            for (j=nln2+1 j<=nlnc ++j)           ' upper half (AIRFLOW)
+             for (i=1  i<= nptc-1 ++i) 
+                exes(0) = (int) (fact*xpl(j)(i)) + xt
+                whys(0) = (int) (fact*(-ypl(j)(i))) + yt
+                slope = (ypl(j)(i+1)-ypl(j)(i))/(xpl(j)(i+1)-xpl(j)(i))
+                xvec = xpl(j,i) + radvec / Math.sqrt(1.0 + slope*slope)
+                yvec = ypl(j)(i) + slope * (xvec - xpl(j)(i))
+                exes(1) = (int) (fact*xvec) + xt
+                whys(1) = (int) (fact*(-yvec)) + yt
                 if (displ == 0) {
                   off1Gg.setColor(col)
-                  exes[1] = (int) (fact*xpl[j][i+1]) + xt
-                  whys[1] = (int) (fact*(-ypl[j][i+1])) + yt
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
+                  exes(1) = (int) (fact*xpl(j)(i+1)) + xt
+                  whys(1) = (int) (fact*(-ypl(j)(i+1))) + yt
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
                 }
                 if (displ == 2 && (i/3*3 == i) ) {
                   off1Gg.setColor(col)
@@ -841,51 +841,55 @@ public class Foil extends java.applet.Applet {
                      if(i == 6 + (n-1)*9) off1Gg.setColor(Color.yellow)
                   }
                   if(i/9*9 == i) off1Gg.setColor(Color.white)
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
                 }
-                if (displ == 1 && ((i-antim)/3*3 == (i-antim)) ) {
+                if (displ == 1 && ((i-antim)/3*3 == (i-antim)) ) then
                   if (ancol == -1) {
                     if((i-antim)/6*6 == (i-antim))off1Gg.setColor(col)
                     if((i-antim)/6*6 != (i-antim))off1Gg.setColor(Color.white)
                   }
-                  if (ancol == 1) {
-                    if((i-antim)/6*6 == (i-antim))off1Gg.setColor(Color.white)
-                    if((i-antim)/6*6 != (i-antim))off1Gg.setColor(col)
-                  }
-                  off1Gg.drawLine(exes[0],whys[0],exes[1],whys[1])
-                }
-             }
-          }
+                  if (ancol == 1) then
+                    if((i-antim)/6*6 == (i-antim)) then 
+						  off1Gg.setColor(Color.white)
+						  end if
+                    if((i-antim)/6*6 != (i-antim))then 
+						  off1Gg.setColor(col)
+						  end if
+                  end if
+                  off1Gg.drawLine(exes(0),whys(0),exes(1),whys(1))
+                end if
+             next i
+          next j
         end if
 
-         if (viewflg == 0) {
-  // draw the airfoil geometry
+         if (viewflg == 0) then
+  ' draw the airfoil geometry
              off1Gg.setColor(Color.white)
-             exes[1] = (int) (fact*(xpl[0][npt2])) + xt
-             whys[1] = (int) (fact*(-ypl[0][npt2])) + yt
-             exes[2] = (int) (fact*(xpl[0][npt2])) + xt
-             whys[2] = (int) (fact*(-ypl[0][npt2])) + yt
-             for (i=1  i<= npt2-1 ++i) {
-                exes[0] = exes[1]
-                whys[0] = whys[1]
-                exes[1] = (int) (fact*(xpl[0][npt2-i])) + xt
-                whys[1] = (int) (fact*(-ypl[0][npt2-i])) + yt
-                exes[3] = exes[2]
-                whys[3] = whys[2]
-                exes[2] = (int) (fact*(xpl[0][npt2+i])) + xt
-                whys[2] = (int) (fact*(-ypl[0][npt2+i])) + yt
-                camx[i] = (exes[1] + exes[2]) / 2
-                camy[i] = (whys[1] + whys[2]) / 2
+             exes(1) = (int) (fact*(xpl(0,npt2))) + xt
+             whys(1) = (int) (fact*(-ypl(0,npt2))) + yt
+             exes(2) = (int) (fact*(xpl(0,npt2))) + xt
+             whys(2) = (int) (fact*(-ypl(0,npt2))) + yt
+             for (i=1  i<= npt2-1 ++i) 
+                exes(0) = exes(1)
+                whys(0) = whys(1)
+                exes(1) = (int) (fact*(xpl(0,npt2-i))) + xt
+                whys(1) = (int) (fact*(-ypl(0,npt2-i))) + yt
+                exes(3) = exes(2)
+                whys(3) = whys(2)
+                exes(2) = (int) (fact*(xpl(0,npt2+i))) + xt
+                whys(2) = (int) (fact*(-ypl(0,npt2+i))) + yt
+                camx(i) = (exes(1) + exes(2)) / 2
+                camy(i) = (whys(1) + whys(2)) / 2
                 off1Gg.setColor(Color.white)
-                off1Gg.fillPolygon(exes,whys,4)    // THIS DRAWS AIRFOIL
-                }
-             }
+                off1Gg.fillPolygon(exes,whys,4)    ' THIS DRAWS AIRFOIL
+                next i
+             end if
           end if
 
-        g.drawImage(offImg1,0,0,this)      // draws airflow!!!!
+        g.drawImage(offImg1,0,0,this)      ' draws airflow!!!!
 
-     end sub // end paint
+     end sub ' end paint
 
-  } // end Viewer
+  } ' end Viewer
 
-} // end all
+} ' end all
